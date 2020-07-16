@@ -18,7 +18,7 @@ func FindDotGit(basePath string) (string, error) {
 	}
 	dotGitPath := path.Join(basePath, ".git")
 	_, err := os.Stat(dotGitPath)
-	if os.IsNotExist(err) {
+	if err != nil {
 		return FindDotGit(path.Dir(basePath)) // Dir removes the last part of the path
 	}
 	return dotGitPath, nil
