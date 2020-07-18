@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/go-git/go-billy/v5/osfs"
 	"github.com/haydenjeune/committer/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -22,13 +23,15 @@ func init() {
 }
 
 func runSet(profileName string) {
-	// get config
+	// Setup filesystem
+	fs := osfs.New("/")
 	pwd, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 
-	dotGitPath, err := utils.FindDotGit(pwd)
+	// Find repo in present dir or a parent
+	gitRepo, err := utils.FindGitRepository(pwd, fs)
 	if err == utils.ErrIsNotRepository {
 		fmt.Println(err)
 		return
@@ -37,17 +40,18 @@ func runSet(profileName string) {
 		panic(err)
 	}
 
-	conf, err := utils.GetLocalConfig(dotGitPath)
+	// Read config
+	conf, err := gitRepo.Config()
 	if err != nil {
 		panic(err)
 	}
 
-	// modify config
+	// Modify config
 	conf.User.Name = "haydenjeune"
 	conf.User.Email = "33794706+haydenjeune@users.noreply.github.com"
 
-	// set config
-	err = utils.SetLocalConfig(dotGitPath, conf)
+	// Set config
+	err = gitRepo.SetConfig(conf)
 	if err != nil {
 		panic(err)
 	}
