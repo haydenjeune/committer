@@ -1,11 +1,11 @@
 package profile
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/BurntSushi/toml"
 	"github.com/go-git/go-billy/v5"
-	"github.com/pkg/errors"
 )
 
 // Profile stores the details of the committer.
