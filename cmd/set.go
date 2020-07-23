@@ -3,9 +3,13 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path"
+
+	"github.com/haydenjeune/committer/pkg/profile"
 
 	"github.com/go-git/go-billy/v5/osfs"
 	"github.com/haydenjeune/committer/pkg/utils"
+	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 )
 
@@ -40,19 +44,33 @@ func runSet(profileName string) {
 		panic(err)
 	}
 
-	// Read config
 	conf, err := gitRepo.Config()
 	if err != nil {
 		panic(err)
 	}
 
+	// Read Profiles
+	profileStore := profile.NewStorage(osfs.New(committerConfigDir()))
+	profiles, err := profileStore.Read()
+
 	// Modify config
-	conf.User.Name = "haydenjeune"
-	conf.User.Email = "33794706+haydenjeune@users.noreply.github.com"
+	if user, ok := profiles[profileName]; ok {
+		conf.User = user
+	} else {
+		fmt.Printf("Profile '%s' does not exist\n", profileName)
+		return
+	}
 
 	// Set config
-	err = gitRepo.SetConfig(conf)
+	if err = gitRepo.SetConfig(conf); err != nil {
+		panic(err)
+	}
+}
+
+func committerConfigDir() string {
+	home, err := homedir.Dir()
 	if err != nil {
 		panic(err)
 	}
+	return path.Join(home, ".committer")
 }
