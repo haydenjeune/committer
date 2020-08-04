@@ -51,7 +51,6 @@ func (s *Storage) Read() (map[string]Profile, error) {
 func (s *Storage) Save(profiles map[string]Profile) error {
 	file, err := s.fs.Create(storageFile)
 	if err != nil {
-		// TODO: But what does %w do
 		return fmt.Errorf("failed to open or create profiles file: %v", err)
 	}
 	defer file.Close()
