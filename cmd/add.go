@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"os"
 	"reflect"
