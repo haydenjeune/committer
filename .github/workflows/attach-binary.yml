@@ -17,6 +17,10 @@ jobs:
         env:
           GOPROXY: "https://proxy.golang.org"
         run: go build -o ./bin/committer .
+      - name: Test
+        env:
+          GOPROXY: "https://proxy.golang.org"
+        run: go test ./pkg/... -v
       - name: Upload the artifacts
         uses: skx/github-action-publish-binaries@master
         env:
