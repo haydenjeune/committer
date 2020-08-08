@@ -6,12 +6,35 @@ different github accounts for uni, work, and personal things.
 
 ## Usage
 
-I'm still working on this. I'll add things here as they're developed.
+### Adding new author details
 
-### Setting commit author
+```
+committer add <profile>
+```
+
+Committer will then prompt you for a name and email to save against the given profile name.
+
+### Setting commit author on a repo
 
 ```
 committer set <profile>
 ```
 
-This will set the commit author of the repository that you are currently in to my details. `<profile>` can be anything, and the effect will be the same. I'm working on storing these details somewhere, so you can select a profile to use.
+This will set the commit author of the repository that you are currently in to my details. `<profile>` must be a profile that has been added with the
+`committer add <profile>` command.
+
+### Showing saved profiles
+
+```
+committer list
+```
+
+This will show a list of saved profiles.
+
+### Removing saved profiles
+
+```
+committer rm <profile>
+```
+
+This will remove the profile with the given name.
