@@ -1,7 +1,6 @@
 package profile
 
 import (
-	"fmt"
 	"io/ioutil"
 	"strings"
 	"testing"
@@ -115,7 +114,6 @@ func Test_Save_SavesProfile(t *testing.T) {
 		return
 	}
 	str := string(bytes)
-	fmt.Println(str)
 	if !strings.Contains(str, "[test]") ||
 		!strings.Contains(str, "Name = \"tester\"") ||
 		!strings.Contains(str, "Email = \"a@b.com\"") {
