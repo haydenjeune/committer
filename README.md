@@ -4,6 +4,16 @@ Committer is a small command line utility that makes it easy to set the details
 that will be used to commit to the current git repo. This is useful if you have
 different github accounts for uni, work, and personal things.
 
+## Installation
+
+With go installed, `committer` can be installed with:
+
+```bash
+go get github.com/haydenjeune/committer
+```
+
+Binaries for Mac (AMD64), Windows(AMD64), and Linux(AMD64 and ARM64) are also attached to the release.
+
 ## Usage
 
 ### Adding new author details

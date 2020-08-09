@@ -1,0 +1,50 @@
+name: Attach binaries to release
+on:
+  release:
+    types: created
+jobs:
+  generate:
+    strategy:
+      matrix:
+        target:
+          [[darwin, amd64], [linux, amd64], [linux, arm64], [windows, amd64]]
+    name: Create release-artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.14
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.14
+
+      - name: Check out source code
+        uses: actions/checkout@v1
+
+      - name: Get version
+        id: get_version
+        run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+
+      - name: Get package name
+        id: get_package_name
+        run: echo ::set-output name=package_name::committer-${{ steps.get_version.outputs.version }}-${{ matrix.target[0] }}-${{ matrix.target[1] }}
+
+      - name: Build
+        env:
+          GOPROXY: "https://proxy.golang.org"
+          GOOS: ${{matrix.target[0]}}
+          GOARCH: ${{matrix.target[1]}}
+        run: go build -o ./bin/committer .
+
+      - name: Package artifacts (.tar.gz)
+        if: matrix.target[0] != 'windows'
+        run: tar -czvf ${{steps.get_package_name.outputs.package_name}}.tar.gz bin
+
+      - name: Package artifacts (.zip)
+        if: matrix.target[0] == 'windows'
+        run: zip ${{steps.get_package_name.outputs.package_name}}.zip bin/*
+
+      - name: Upload package
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: ${{steps.get_package_name.outputs.package_name}}.*
