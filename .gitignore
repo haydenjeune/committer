@@ -16,3 +16,6 @@
 
 # built binary
 committer
+
+# Mac files
+.DS_Store
