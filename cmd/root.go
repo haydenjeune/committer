@@ -5,8 +5,8 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 
+	"github.com/haydenjeune/committer/pkg/errors"
 	"github.com/spf13/cobra"
 )
 
@@ -21,7 +21,6 @@ var rootCmd = &cobra.Command{
 // Execute parses input and runs the application
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		errors.PrintAndExit(fmt.Errorf("error executing root command: %v", err))
 	}
 }

@@ -7,6 +7,7 @@ import (
 	"reflect"
 
 	"github.com/go-git/go-billy/v5/osfs"
+	"github.com/haydenjeune/committer/pkg/errors"
 	"github.com/haydenjeune/committer/pkg/profile"
 	"github.com/spf13/cobra"
 )
@@ -33,14 +34,13 @@ func runAdd(profileName string) {
 	defaultProfile := profiles[profileName]
 	err := inputFromDefault(&defaultProfile)
 	if err != nil {
-		fmt.Printf("error taking user input: %v\n", err)
-		return
+		errors.PrintAndExit(fmt.Errorf("error taking user input: %v", err))
 	}
 	profiles[profileName] = defaultProfile
 
 	err = profileStore.Save(profiles)
 	if err != nil {
-		fmt.Printf("error saving profile: %v\n", err)
+		errors.PrintAndExit(fmt.Errorf("error saving profile: %v", err))
 	}
 }
 

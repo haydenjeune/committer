@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/go-git/go-billy/v5/osfs"
+	"github.com/haydenjeune/committer/pkg/errors"
 	"github.com/haydenjeune/committer/pkg/profile"
 	"github.com/spf13/cobra"
 )
@@ -18,7 +19,7 @@ var rmCmd = &cobra.Command{
 		profileStore := profile.NewStorage(osfs.New(committerConfigDir()))
 		profiles, err := profileStore.Read()
 		if err != nil {
-			fmt.Printf("error reading profiles: %v\n", err)
+			errors.PrintAndExit(fmt.Errorf("error reading saved profiles: %v", err))
 		}
 
 		if _, exists := profiles[profileName]; !exists {

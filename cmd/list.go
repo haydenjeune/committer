@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/go-git/go-billy/v5/osfs"
+	"github.com/haydenjeune/committer/pkg/errors"
 	"github.com/haydenjeune/committer/pkg/profile"
 	"github.com/spf13/cobra"
 )
@@ -14,7 +15,10 @@ var listCmd = &cobra.Command{
 	Short: "List saved committers",
 	Run: func(cmd *cobra.Command, args []string) {
 		profileStore := profile.NewStorage(osfs.New(committerConfigDir()))
-		profiles, _ := profileStore.Read()
+		profiles, err := profileStore.Read()
+		if err != nil {
+			errors.PrintAndExit(fmt.Errorf("error reading saved profiles: %v", err))
+		}
 
 		for name, profile := range profiles {
 			fmt.Printf("%s: {\n\tuser.name: \t%s\n\tuser.email: \t%s\n}\n", name, profile.Name, profile.Email)
