@@ -8,7 +8,7 @@ import (
 	"github.com/haydenjeune/committer/pkg/profile"
 
 	"github.com/go-git/go-billy/v5/osfs"
-	"github.com/haydenjeune/committer/pkg/utils"
+	"github.com/haydenjeune/committer/pkg/git"
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 )
@@ -35,8 +35,8 @@ func runSet(profileName string) {
 	}
 
 	// Find repo in present dir or a parent
-	gitRepo, err := utils.FindGitRepository(pwd, fs)
-	if err == utils.ErrIsNotRepository {
+	gitRepo, err := git.FindRepository(pwd, fs)
+	if err == git.ErrIsNotRepository {
 		fmt.Println(err)
 		return
 	}

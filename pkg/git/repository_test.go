@@ -1,4 +1,4 @@
-package utils
+package git
 
 import (
 	"strings"
@@ -25,11 +25,11 @@ func Test_ReadRepository_ReadsRepository(t *testing.T) {
 	}
 }
 
-func Test_FindGitRepository_CantFindRepo_IsNotRepo(t *testing.T) {
+func Test_FindRepository_CantFindRepo_IsNotRepo(t *testing.T) {
 	fs := memfs.New()
 	fs.MkdirAll("/test/folder", 0600)
 
-	result, err := FindGitRepository("/test/folder", fs)
+	result, err := FindRepository("/test/folder", fs)
 
 	if err == nil {
 		t.Errorf("FindDotGit shouldn't have found a git repo but found repo with root '%s'", result.Root())
@@ -40,11 +40,11 @@ func Test_FindGitRepository_CantFindRepo_IsNotRepo(t *testing.T) {
 	}
 }
 
-func Test_FindGitRepository_FindsRepo_IsRepo(t *testing.T) {
+func Test_FindRepository_FindsRepo_IsRepo(t *testing.T) {
 	fs := memfs.New()
 	fs.MkdirAll("/test/folder/.git", 0600)
 
-	repo, err := FindGitRepository("/test/folder", fs)
+	repo, err := FindRepository("/test/folder", fs)
 
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err.Error())
@@ -56,12 +56,12 @@ func Test_FindGitRepository_FindsRepo_IsRepo(t *testing.T) {
 	}
 }
 
-func Test_FindGitRepository_FindsRepo_IsChildDirOfRepo(t *testing.T) {
+func Test_FindRepository_FindsRepo_IsChildDirOfRepo(t *testing.T) {
 	fs := memfs.New()
 	fs.MkdirAll("/test/folder/.git", 0600)
 	fs.MkdirAll("/test/folder/child", 0600)
 
-	repo, err := FindGitRepository("/test/folder/child", fs)
+	repo, err := FindRepository("/test/folder/child", fs)
 
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err.Error())
