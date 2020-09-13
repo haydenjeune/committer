@@ -6,13 +6,32 @@ different github accounts for uni, work, and personal things.
 
 ## Installation
 
+There are 3 ways to install `committer`:
+
+1) Precompiled binaries
+
+Binaries for Mac (AMD64), Windows(AMD64), and Linux(AMD64 and ARM64) are attached to the release. Just download them, and put them somewhere on your `PATH` to access `committer` from the command line.
+
+2) Go get
+
 With go installed, `committer` can be installed with:
 
 ```bash
 go get github.com/haydenjeune/committer
 ```
 
-Binaries for Mac (AMD64), Windows(AMD64), and Linux(AMD64 and ARM64) are also attached to the release.
+3) Homebrew
+
+On Mac, you can use Homebrew to manage your installation. 
+
+First add my tap to your homebrew.
+
+```brew tap haydenjeune/tap```
+
+Then install `committer` form this tap.
+
+```brew install haydenjeune/tap/committer```
+
 
 ## Usage
 
