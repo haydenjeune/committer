@@ -26,11 +26,15 @@ On Mac, you can use Homebrew to manage your installation.
 
 First add my tap to your homebrew.
 
-```brew tap haydenjeune/tap```
+```bash
+brew tap haydenjeune/tap
+```
 
 Then install `committer` form this tap.
 
-```brew install haydenjeune/tap/committer```
+```bash
+brew install haydenjeune/tap/committer
+```
 
 
 ## Usage
