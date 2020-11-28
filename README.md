@@ -30,7 +30,7 @@ First add my tap to your homebrew.
 brew tap haydenjeune/tap
 ```
 
-Then install `committer` form this tap.
+Then install `committer` from this tap.
 
 ```bash
 brew install haydenjeune/tap/committer
